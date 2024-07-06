@@ -6,9 +6,8 @@ else()
   set(PATCH_NUM 0)
 endif()
 
-project(hello CXX)
-
-  VERSION 0.0.${PATCH_NUM}
+project(hello LANGUAGES CXX
+    VERSION 0.0.${PATCH_NUM}
 )
 
 set(CMAKE_CXX_STANDARD 17)
@@ -37,19 +36,19 @@ endif()
 include(${PROJECT_SOURCE_DIR}/cmake/conan.cmake)
 
 conan_cmake_run(
-  CONANFILE conanfile.txt
+  CONANFILE conanfile.py
   BASIC_SETUP
   CMAKE_TARGETS # individual targets to link to
   BUILD
     missing 
 )
-
 configure_file(version.h.in version.h)
-target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_BINARY_DIR})
 
 option(BUILD_TESTS "Build unittests" OFF)
 
 add_subdirectory(src)
+
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_BINARY_DIR})
 
 if(BUILD_TESTS)
     enable_testing()
@@ -66,4 +65,3 @@ set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
 set(CPACK_PACKAGE_CONTACT example@example.com)
 
 include(CPack)
-
