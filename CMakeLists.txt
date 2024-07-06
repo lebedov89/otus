@@ -6,14 +6,36 @@ else()
   set(PATCH_NUM 0)
 endif()
 
-project(hello
-  LANGUAGES CXX
+project(hello CXX)
+
   VERSION 0.0.${PATCH_NUM}
 )
 
-set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_CXX_STANDARD 17)
+
+set(FLAGS_COMMON
+        "-pedantic"
+        "-Wall"
+        "-Wcast-align"
+        "-Wcast-qual"
+        "-Wconversion"
+        "-Wextra"
+        "-Wshadow"
+        "-Wold-style-cast"
+        "-Woverloaded-virtual"
+        "-fno-exceptions"
+        "-fno-rtti"
+)
+
+string(REPLACE ";" " " FLAGS_COMMON "${FLAGS_COMMON}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FLAGS_CPU} ${FLAGS_COMMON}")
+
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose build type: Debug Release." FORCE)
+endif()
 
 include(${PROJECT_SOURCE_DIR}/cmake/conan.cmake)
+
 conan_cmake_run(
   CONANFILE conanfile.txt
   BASIC_SETUP
@@ -23,7 +45,7 @@ conan_cmake_run(
 )
 
 configure_file(version.h.in version.h)
-include_directories(${CMAKE_BINARY_DIR})
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_BINARY_DIR})
 
 option(BUILD_TESTS "Build unittests" OFF)
 

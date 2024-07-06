@@ -9,7 +9,7 @@ target_link_libraries(example CONAN_PKG::gtest CONAN_PKG::hello)
 # target_compile_features(example PUBLIC cxx_std_17)
 
 # CTest is a testing tool that can be used to test your project.
-# enable_testing()
-# add_test(NAME example
-#          WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin
-#          COMMAND example)
+enable_testing()
+add_test(NAME example
+         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin
+         COMMAND example)

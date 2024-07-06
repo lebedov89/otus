@@ -5,7 +5,7 @@ class HelloConan(ConanFile):
     name = "hello"
     version = "0.1"
     license = "None"
-    author = "Pavel Filonov filonovpv@gmail.com"
+    author = "Lebedov Test(from Pavel Filonov filonovpv@gmail.com)"
     url = "https://github.com/sdukshis/otus-cpp-ci-cd"
     description = "C++ course CI/CD example"
     topics = ("<Put some tag here>", "<here>", "<and here>")
