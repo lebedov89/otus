@@ -1,18 +1,19 @@
-from conans import ConanFile, CMake
-
+from conan import ConanFile
+from conan.tools.cmake import cmake_layout
 
 class HelloConan(ConanFile):
     name = "hello"
     version = "0.1"
     license = "None"
     author = "Lebedov Test(from Pavel Filonov filonovpv@gmail.com)"
-    url = "https://github.com/sdukshis/otus-cpp-ci-cd"
-    description = "C++ course CI/CD example"
+    url = "https://github.com/lebedov89/otus"
+    description = "C++ pets"
     topics = ("<Put some tag here>", "<here>", "<and here>")
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False], "fPIC": [True, False]}
     default_options = {"shared": False, "fPIC": True}
-    generators = "cmake"
+    generators = "CMakeDeps", "CMakeToolchain"
+
     exports_sources = "src/*", "CMakeLists.txt", "version.h.in", "cmake/*"
 
     def config_options(self):
@@ -28,6 +29,16 @@ class HelloConan(ConanFile):
         # self.run('cmake %s/hello %s'
         #          % (self.source_folder, cmake.command_line))
         # self.run("cmake --build . %s" % cmake.build_config)
+
+    def requirements(self):
+        self.requires("gtest/1.14.0")
+
+    def layout(self):
+        cmake_layout(self)
+
+    # def generate(self):
+    #     tc = CMakeToolchain(self)
+    #     tc.generate()
 
     def package(self):
         self.copy("*.h", dst="include", src="src")
