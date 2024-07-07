@@ -12,7 +12,7 @@ class HelloConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False], "fPIC": [True, False]}
     default_options = {"shared": False, "fPIC": True}
-    generators = "CMakeDeps", "CMakeToolchain"
+    generators = "CMakeToolchain", "CMakeDeps"
 
     exports_sources = "src/*", "CMakeLists.txt", "version.h.in", "cmake/*"
 
